@@ -1,0 +1,23 @@
+! Visual !
+Dynamic size
+Show captured pieces + score + player name
+Draw arrows for moves
+Forwards/backwards movement (with arrow)
+(New window - show opening lines, possible transpositions, etc.)
+
+
+! Game logic !
+(!) Move notation for all (check(+), checkmate(#), ambiguous, pawn capture)
+(!!) Clicking bug
+
+
+! Moves !
+(!!) Check - notation, castling, check on king, movement of king, movement of pinned pieces
+Checkmate
+
+
+! Rules !
+Stalemate
+(Threefold repetition)
+(Fifty-move repetition)
+(Insufficient material)
