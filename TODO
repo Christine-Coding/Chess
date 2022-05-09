@@ -1,23 +1,26 @@
-! Visual !
-Dynamic size
-Show captured pieces + score + player name
-Draw arrows for moves
-Forwards/backwards movement (with arrow)
-(New window - show opening lines, possible transpositions, etc.)
-
-
-! Game logic !
+! TODO !
 (!) Move notation for all (check(+), checkmate(#), ambiguous, pawn capture)
+(Account for spaces after the move number)
+
+! Bugs !
 (!!) Clicking bug
 
-
 ! Moves !
-(!!) Check - notation, castling, check on king, movement of king, movement of pinned pieces
-Checkmate
+Check - notation, castling, check on king, movement of king, movement of pinned pieces
+        # TODO - if king in one of them, move the king OR BLOCK THE CHECK (try/catch)
+        #  mark the move as check
+        #  if king is moved, always check if it is not moved into a checked square
+(Checkmate)
 
+! Visual !
+(Dynamic size)
+(Show captured pieces + score + player name)
+(Draw arrows for moves)
+(Forwards/backwards movement (with arrow))
+New window - show opening lines, possible transpositions, etc.
 
-! Rules !
-Stalemate
+(! Rules !)
+(Stalemate)
 (Threefold repetition)
 (Fifty-move repetition)
 (Insufficient material)

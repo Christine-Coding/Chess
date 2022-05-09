@@ -3,8 +3,9 @@ import numpy as np
 
 class Game:
     def __init__(self, player_color: bool, opening: int):
-        # track board states, moves and captures
+        # track board states, moves, captures and matrices
         self.board_states = np.empty(5899, dtype=np)
+        self.matrices = np.empty(5899, dtype=np)
         self.white_moves = []
         self.black_moves = []
         self.move_number = 0
@@ -22,8 +23,3 @@ class Game:
         # set if or which openings learner is being used
         # 0 - none, 1 - one line, 2 - multiple lines
         self.opening = opening
-
-        # TODO - if king in one of them, move the king OR BLOCK THE CHECK (try/catch)
-        #  mark the move as check
-        #  if king is moved, always check if it is not moved into a checked square
-        #  delete

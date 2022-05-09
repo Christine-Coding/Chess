@@ -1,7 +1,3 @@
-import webcolors
-from pyglet import shapes
-
-
 # Refresh the screen
 def update_screen(board, game, settings):
     last_move = game.last_move

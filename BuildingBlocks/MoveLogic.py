@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 from BuildingBlocks.Move import update_board, promote, castle_king, update_pawn_promotion, en_passant
+from BuildingBlocks.OpeningsLearners.Helpers import add_matrix
 from BuildingBlocks.ShowPossibleMoves import show_possible_moves, show_possible_captures, show_possible_castling, \
     show_possible_promotion, show_possible_en_passant
 
@@ -19,6 +20,7 @@ def drag_piece(game, board, settings, start_piece, selected_square, x, y):
                 if possible_captures and (selected_square.piece.x, selected_square.piece.y) in possible_captures:
                     update_board(board, selected_square, game)
                     game.board_states[move_number] = deepcopy(board)
+                    game.matrices[move_number] = add_matrix(board)
                 elif game.move_piece.name == "Pawn":
                     promotions = game.move_piece.possible_promotions(board)
                     for movement in promotions:
@@ -32,6 +34,7 @@ def drag_piece(game, board, settings, start_piece, selected_square, x, y):
                 if (selected_square.x, selected_square.y) in game.move_piece.possible_moves(board):
                     update_board(board, selected_square, game)
                     game.board_states[move_number] = deepcopy(board)
+                    game.matrices[move_number] = add_matrix(board)
                 # Castle the king
                 elif game.move_piece.name == "King":
                     castle_to = game.move_piece.possible_castling(board)
@@ -39,6 +42,7 @@ def drag_piece(game, board, settings, start_piece, selected_square, x, y):
                         if (selected_square.x, selected_square.y) == movement[0]:
                             castle_king(board, movement, game)
                             game.board_states[move_number] = deepcopy(board)
+                            game.matrices[move_number] = add_matrix(board)
                 # Promote a pawn or en passant
                 elif game.move_piece.name == "Pawn":
                     if game.move_number == 0 or game.move_number == 1:
@@ -95,6 +99,7 @@ def click_piece(game, board, settings, selected_square, x, y):
                         update_board(board, selected_square, game)
                         game.move_piece = None
                         game.board_states[move_number] = deepcopy(board)
+                        game.matrices[move_number] = add_matrix(board)
                     # promote a pawn
                     elif game.move_piece.name == "Pawn":
                         promotions = game.move_piece.possible_promotions(board)
@@ -140,6 +145,7 @@ def click_piece(game, board, settings, selected_square, x, y):
                     update_board(board, selected_square, game)
                     game.move_piece = None
                     game.board_states[move_number] = deepcopy(board)
+                    game.matrices[move_number] = add_matrix(board)
                 # Castle the king
                 elif game.move_piece.name == "King":
                     castle_to = game.move_piece.possible_castling(board)
@@ -148,6 +154,7 @@ def click_piece(game, board, settings, selected_square, x, y):
                             castle_king(board, movement, game)
                             game.move_piece = None
                             game.board_states[move_number] = deepcopy(board)
+                            game.matrices[move_number] = add_matrix(board)
                 # Promote a pawn or en passant
                 elif game.move_piece.name == "Pawn":
                     if move_number != 0 and move_number != 1:

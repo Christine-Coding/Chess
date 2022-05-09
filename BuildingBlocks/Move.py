@@ -1,9 +1,9 @@
 from copy import deepcopy
 
+from BuildingBlocks.OpeningsLearners.Helpers import add_matrix
 from BuildingBlocks.Pieces.Bishop import Bishop
 from BuildingBlocks.Pieces.Knight import Knight
 from BuildingBlocks.Pieces.Queen import Queen
-from BuildingBlocks.Pieces.Rook import Rook
 
 
 # castle the king
@@ -18,7 +18,9 @@ def castle_king(board, movement, game):
         # update movement status
         board[new[0]][new[1]].piece.has_not_moved = False
         board[old[0]][old[1]].piece = None
+    game.board_states[game.move_number] = deepcopy(board)
     game.move_number += 1
+    game.matrices[game.move_number] = add_matrix(board)
     game.whose_turn = not game.whose_turn
     # highlight the squares the pieces moved from and to
     game.last_move = [(movement[0][0], movement[0][1]), (movement[1][0], movement[1][1])]
@@ -62,7 +64,9 @@ def update_board(board, selected_square, game):
             or board[move_piece_x][move_piece_y].piece.name == "Rook":
         board[selected_square_x][selected_square_y].piece.has_not_moved = False
     board[move_piece_x][move_piece_y].piece = None
+    game.board_states[game.move_number] = deepcopy(board)
     game.move_number += 1
+    game.matrices[game.move_number] = add_matrix(board)
     game.whose_turn = not game.whose_turn
     # highlight the squares the pieces moved from and to
     game.last_move = [(selected_square_x, selected_square_y), (move_piece_x, move_piece_y)]
@@ -92,7 +96,7 @@ def select_promotion(square, x, y, color, tile_size, game):
 
         # Promote to a rook
         else:
-            square.piece = Rook(square.x, square.y, color)
+            square.piece = (square.x, square.y, color)
             square.piece.has_not_moved = False
             if color == "white":
                 game.white_moves.append(''.join([square.letter, square.number, '=R']))
@@ -126,6 +130,7 @@ def update_pawn_promotion(game, board, tile_size, selected_square, x, y):
         game.pawn_promotion = False
         game.board_states[game.move_number] = deepcopy(board)
         game.move_number += 1
+        game.matrices[game.move_number] = add_matrix(board)
         game.whose_turn = not game.whose_turn
     # If clicked elsewhere, the promotion is stopped
     else:
@@ -152,4 +157,5 @@ def en_passant(game, board, selected_square):
     board[game.move_piece.x][game.move_piece.y].piece = None
     game.board_states[game.move_number] = deepcopy(board)
     game.move_number += 1
+    game.matrices[game.move_number] = add_matrix(board)
     game.whose_turn = not game.whose_turn

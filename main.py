@@ -1,17 +1,20 @@
 from copy import deepcopy
 
+import numpy as np
 import pyglet
 
 from BuildingBlocks.CheckOrMate import check_if_check
 from BuildingBlocks.Classes.Game import Game
 from BuildingBlocks.Initialize import initialize_board, initialize_pieces
+from BuildingBlocks.OpeningsLearners.Helpers import add_matrix
+from BuildingBlocks.OpeningsLearners.StringToLattice import lines_to_matrices
 from BuildingBlocks.Screen import update_screen, click_square
 from BuildingBlocks.Classes.Settings import Settings
 from BuildingBlocks.MoveLogic import drag_piece, click_piece
 
 
 # General settings
-settings = Settings(player_color=False, show_tile_labels=False,
+settings = Settings(player_color=True, show_tile_labels=False,
                     possible_moves_color="grey", possible_captures_color="red", possible_castling_color="black",
                     possible_promotions_color="green", possible_en_passant_color="gray", last_move_color="yellow",
                     tile_size=75, white_tile_color="white", black_tile_color="Sienna")
@@ -29,6 +32,8 @@ start_pos_x, start_pos_y, stop_pos_x, stop_pos_y = 0, 0, 0, 0
 # Initialize the game
 game = Game(player_color=settings.player_color, opening=1)  # playing with white, learning one line
 game.board_states[0] = deepcopy(board)
+game.matrices[0] = add_matrix(board)
+opening_lines = [item for sublist in lines_to_matrices() for item in sublist]
 
 
 @game_window.event
@@ -47,6 +52,11 @@ def on_mouse_press(x, y, button, modifiers):
 def on_mouse_release(x, y, button, modifiers):
     global start_pos_x, start_pos_y, stop_pos_x, stop_pos_y, game
     print(game.white_moves, game.black_moves)
+    this = 0
+    for el in opening_lines:
+        if (np.array_equal(game.matrices[game.move_number], el)):
+            this += 1
+            print("Jee!")
     stop_pos_x, stop_pos_y = x, y
     # right the button is clicked/dragged
     if button == 1:
