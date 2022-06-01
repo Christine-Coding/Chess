@@ -48,7 +48,6 @@ def lines_to_matrices():
             elif "=" in move:
                 board = promote(board, move, "white" if counter else "black")
             else:
-                # TODO - en passant
                 board = move_a_piece(board, move, "Pawn", "white" if counter else "black")
             counter = not counter
             matrices.append(add_matrix(board))
