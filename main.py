@@ -53,10 +53,10 @@ def on_mouse_release(x, y, button, modifiers):
     global start_pos_x, start_pos_y, stop_pos_x, stop_pos_y, game
     print(game.white_moves, game.black_moves)
     this = 0
-    for el in opening_lines:
-        if np.array_equal(game.matrices[game.move_number], el):
-            this += 1
-            print("Jee!")
+    # for el in opening_lines:
+    #     if np.array_equal(game.matrices[game.move_number], el):
+    #         this += 1
+    #         print(this)
     stop_pos_x, stop_pos_y = x, y
     # right the button is clicked/dragged
     if button == 1:
